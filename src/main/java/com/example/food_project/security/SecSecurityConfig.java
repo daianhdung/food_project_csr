@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
@@ -57,10 +58,14 @@ public class SecSecurityConfig implements AuthenticationProvider {
         /*
         * antMatcher : Định nghĩa link cần xác thực
         * authenticated: Bắt buộc phải chứng thực (đăng nhập) vào link chỉ định ở antMatchers
+        * permitAll: Cho phép truy cập full quyền vào link chỉ định ở antMatcher
+        * anyRequest: Toàn bộ request gọi vào API
         */
 
         http.csrf()
                 .disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/signin/test").authenticated()

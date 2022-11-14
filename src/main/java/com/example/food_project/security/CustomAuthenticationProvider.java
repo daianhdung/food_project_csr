@@ -1,24 +1,43 @@
 package com.example.food_project.security;
 
 
+import com.example.food_project.entity.UserEntity;
+import com.example.food_project.services.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
+    @Autowired
+    LoginService loginService;
+    //@Qualifier("") chỉ định tên Bean mà mình lấy trên container
+
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         //Xử lí code đăng nhập thành công hay thất bại
-        String name = authentication.getName();
+        String userName = authentication.getName();
         String password = authentication.getCredentials().toString();
-        //
-        System.out.println(" name " + name + " password " + password);
-        return new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
+        UserEntity userEntity = loginService.checkLogin(userName);
+        boolean isMatchPassword = passwordEncoder.matches(password, userEntity.getPassword());
+        if(userEntity != null){
+            if(isMatchPassword){
+                return new UsernamePasswordAuthenticationToken(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
+            }else {
+                return null;
+            }
+        }else {
+            return null;
+        }
     }
 
     @Override
