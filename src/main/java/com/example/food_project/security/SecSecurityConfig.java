@@ -1,5 +1,6 @@
 package com.example.food_project.security;
 
+import com.example.food_project.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
 @Configuration
@@ -39,6 +41,8 @@ public class SecSecurityConfig implements AuthenticationProvider {
 
     @Autowired
     CustomAuthenticationProvider customAuthenticationProvider;
+    @Autowired
+    JwtTokenFilter jwtTokenFilter;
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
@@ -68,15 +72,17 @@ public class SecSecurityConfig implements AuthenticationProvider {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/signin").permitAll()
+                .antMatchers("/refresh-token").permitAll()
                 .antMatchers("/signin/test").authenticated()
                 .anyRequest().authenticated();
+
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
 
         return null;
     }
