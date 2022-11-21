@@ -1,4 +1,4 @@
-package com.example.food_project.services;
+package com.example.food_project.services.impl;
 
 import com.example.food_project.entity.UserEntity;
 import com.example.food_project.repository.UserRepository;
