@@ -72,6 +72,7 @@ public class SecSecurityConfig implements AuthenticationProvider {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/signin").permitAll()
+                .antMatchers("/file/**").permitAll()
                 .antMatchers("/refresh-token").permitAll()
                 .antMatchers("/signin/test").authenticated()
                 .anyRequest().authenticated();

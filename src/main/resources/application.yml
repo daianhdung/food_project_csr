@@ -16,3 +16,6 @@ spring:
 server:
   servlet:
     context-path: /api
+
+file:
+  upload-dir: C:\Users\Tuan\Desktop\testfile
