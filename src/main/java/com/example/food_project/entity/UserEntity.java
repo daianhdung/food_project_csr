@@ -2,6 +2,7 @@ package com.example.food_project.entity;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "user")
 public class UserEntity {
@@ -36,6 +37,15 @@ public class UserEntity {
 
     @Column(name = "is_active")
     private boolean isActive;
+
+    @OneToOne(mappedBy = "user")
+    private UserDetailEntity userDetail;
+
+    @OneToMany(mappedBy = "user")
+    private Set<FoodReviewEntity> foodReview;
+
+    @OneToMany(mappedBy = "user")
+    private Set<TOrderEntity> tOthers;
 
     public int getId() {
         return id;
@@ -115,5 +125,29 @@ public class UserEntity {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public UserDetailEntity getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetailEntity userDetail) {
+        this.userDetail = userDetail;
+    }
+
+    public Set<FoodReviewEntity> getFoodReview() {
+        return foodReview;
+    }
+
+    public void setFoodReview(Set<FoodReviewEntity> foodReview) {
+        this.foodReview = foodReview;
+    }
+
+    public Set<TOrderEntity> gettOthers() {
+        return tOthers;
+    }
+
+    public void settOthers(Set<TOrderEntity> tOthers) {
+        this.tOthers = tOthers;
     }
 }
