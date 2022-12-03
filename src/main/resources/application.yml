@@ -19,3 +19,7 @@ server:
 
 file:
   upload-dir: C:\Users\Tuan\Desktop\testfile
+
+redis:
+  host: localhost
+  port: 6379

@@ -27,10 +27,10 @@ public class FoodEntity {
     @JoinColumn(name = "id_restaurant")
     private RestaurantEntity restaurant;
 
+
     @OneToOne(mappedBy = "food")
     private FoodDetailEntity foodDetail;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "food")
     private Set<FoodReviewEntity> foodReview;
 
