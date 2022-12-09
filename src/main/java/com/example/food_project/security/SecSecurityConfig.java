@@ -24,8 +24,7 @@ import org.springframework.stereotype.Component;
 
 @Configuration
 @EnableWebSecurity
-@Component
-public class SecSecurityConfig implements AuthenticationProvider {
+public class SecSecurityConfig {
     //Dùng để khởi tạo danh sách user cứng và danh sách user này được lưu ở RAM
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService(){
@@ -82,15 +81,5 @@ public class SecSecurityConfig implements AuthenticationProvider {
         return http.build();
     }
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
-        return null;
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return false;
-    }
 }
 
