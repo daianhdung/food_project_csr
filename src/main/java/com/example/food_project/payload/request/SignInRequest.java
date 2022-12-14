@@ -1,8 +1,15 @@
 package com.example.food_project.payload.request;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class SignInRequest {
 
+    @NotBlank(message = "Vui lòng nhập username")
     private String username;
+    @NotBlank(message = "Vui lòng nhập mật khẩu")
+    @Pattern(regexp = "^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$"
+            , message = "Mật khẩu phải bao gồm chữ hoa, chữ thường, ký tự đặc biệt, số và phải lớn hơn hoặc bằng 8 kí tự")
     private String password;
 
 
