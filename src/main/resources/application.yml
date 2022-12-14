@@ -17,5 +17,15 @@ server:
   servlet:
     context-path: /api
 
+
 file:
   upload-dir: C:\Users\Tuan\Desktop\testfile
+
+#Đăng kí log cho toàn project
+logging:
+  level:
+    root: info
+  file:
+    name: D:\DoAnJava19\food_project_csr\log\dev.log
+  pattern:
+    console:
